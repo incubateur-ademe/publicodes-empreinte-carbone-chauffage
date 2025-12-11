@@ -1,0 +1,61 @@
+FE:
+  titre: Facteur d'émission
+
+FE . électricité:
+  valeur: commun . mix électrique . empreinte carbone
+  unité: kgCO2e/kWh
+
+FE . gaz:
+  titre: Facteur d'émission gaz naturel
+  formule: 0.215
+  unité: kgCO2e/kWh
+  note: |
+    Il s'agit de kgCO2e/kWh *PCS*.
+
+    On raisonne en PCS (Pouvoir Calorifique Supérieur) et non en PCI (Pouvoir Calorifique Inférieur), car le PCS est utilisé en tant que coefficient de conversion dans les factures pour convertir le volume de gaz utilisé en kWh :
+    on fait l'hypothèse que la chaudière gaz récupère bien la chaleur latente de condensation.
+
+    Base Empreinte: Gaz naturel - 2022/mix moyen/consommation (en kWh PCS) (pas de chiffre plus récent 10/2025).
+
+FE . bûches:
+  titre: Facteur d'émission bois bûches
+  formule: 0.0460
+  unité: kgCO2e/kWh
+  note: |
+    Attention : faute de facteur d'émission de statut "validé générique" pour le bois bûche dans la Base Empreinte, nous optons pour un facteur d'émission "validé spécifique"
+    (initiative E+/C- = label Energie Positive et Réduction Carbone), afin d'assurer une certaine cohérence pour l'utilisateur parcourant le modèle de calcul.
+    Cependant, les facteurs d'émissions E+/C- suivent des règles d'élaboration parfois différentes des règles de calcul de la Base Empreinte.
+    Il est donc probable que ce facteur d'émission sous-estime légèrement l'impact GES de la consommation d'un kWh de bois bûche en ne prenant pas en compte les émissions de méthane imbrulé.
+
+FE . granulés:
+  titre: Facteur d'émission bois granulés
+  formule: 0.0320
+  unité: kgCO2e/kWh
+  note: |
+    Attention : faute de facteur d'émission de statut "validé générique" pour les granulés dans la Base Empreinte (le FE valide générique disponible ne correspond pas à un usage dans un poêle individuel mais dans un réseau de chaleur),
+    nous optons pour un facteur d'émission "validé spécifique" (initiative E+/C- = label Energie Positive et Réduction Carbone), afin d'assurer une certaine cohérence pour l'utilisateur parcourant le modèle de calcul.
+    Cependant, les facteurs d'émissions E+/C- suivent des règles d'élaboration parfois différentes des règles de calcul de la Base Empreinte.
+    Il est donc probable que ce facteur d'émission sous-estime légèrement l'impact GES de la consommation d'un kWh de bois bûche en ne prenant pas en compte les émissions de méthane imbrulé.
+
+FE . fioul:
+  titre: Facteur d'émission fioul domestique
+  formule: 0.323
+  unité: kgCO2e/kWh
+  note: |
+    Base Empreinte : Fioul domestique (en kWh PCI)
+
+FE . réseau de chaleur:
+  titre: Facteur d'émission réseau de chaleur
+  formule: 0.113
+  unité: kgCO2e/kWh
+  note: |
+    Facteur d'émission issu de l'[enquête FEDEN sur les réseaux de chaleur en France 2024](https://fedene.fr/ressource/enquete-annuelle-des-reseaux-de-chaleur-et-de-froid-2024/), page 4.
+
+FE . GPL:
+  titre: Facteur d'émission GPL
+  formule: 0.271
+  unité: kgCO2e/kWh
+  note: |
+    Base Empreinte : GPL pour véhicule routier (en kWh PCI)
+
+    Il n'y a pas de GPL domestique dans la Base Empreinte. Le GPL semble correspondre aux bouteilles de gaz, une solution serait de pointer vers le gaz naturel ?
