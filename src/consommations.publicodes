@@ -1,0 +1,415 @@
+CEREN:
+  description: |
+    Ce modèle est basé sur le jeu de données du Ceren et SDES [Consommation d'énergie par usage du résidentiel](https://www.statistiques.developpement-durable.gouv.fr/consommation-denergie-par-usage-du-residentiel), pour l'année 2023.
+
+CEREN . saisie surface:
+  question: Souhaitez-vous personaliser la surface moyenne du logement ?
+  par défaut: CEREN . surface moyenne
+
+CEREN . surface moyenne:
+  titre: Surface moyenne par logement
+  formule: surface totale / nombre logements
+  unité: m2
+
+CEREN . surface moyenne maison:
+  titre: Surface moyenne par maison
+  formule: surface totale maisons / nombre maisons
+  unité: m2
+
+CEREN . surface moyenne appartement:
+  titre: Surface moyenne par appartement
+  formule: surface totale appartements / nombre appartements
+  unité: m2
+
+CEREN . surface totale:
+  formule: surface totale appartements + surface totale maisons
+  unité: m2
+  note: Surface totale habitable en France
+
+CEREN . surface totale appartements:
+  formule: 872718132
+  unité: m2
+  note: Surface totale habitable en France
+
+CEREN . surface totale maisons:
+  formule: 1909015144
+  unité: m2
+  note: Surface totale habitable en France
+
+CEREN . nombre logements:
+  titre: Nombre de logements en France
+  formule: nombre appartements + nombre maisons
+
+CEREN . nombre appartements:
+  titre: Nombre d'appartements en France
+  formule: 13489038
+
+CEREN . nombre maisons:
+  titre: Nombre de maisons en France
+  formule: 16916999
+
+CEREN . surface:
+  titre: Surface totale par somme des énergies
+  formule:
+    somme:
+      - électricité
+      - gaz
+      - fioul
+      - bois
+      - réseau de chaleur
+      - GPL
+  note: On considère ici toutes les sources d'énergie utiles au chauffage (air, ecs, cuisson).
+
+CEREN . surface . électricité:
+  formule: électricité hors PAC + électricité PAC
+  unité: m2
+
+CEREN . surface . électricité hors PAC:
+  formule: 705753117
+  unité: m2
+
+CEREN . surface . électricité PAC:
+  formule: 342034860
+  unité: m2
+
+CEREN . surface . gaz:
+  formule: 954498123
+  unité: m2
+
+CEREN . surface . fioul:
+  formule: 250118076
+  unité: m2
+
+CEREN . surface . bois:
+  formule: 365026770
+  unité: m2
+
+CEREN . surface . réseau de chaleur:
+  formule: 107964972
+  unité: m2
+
+CEREN . surface . GPL:
+  formule: 46304442
+  unité: m2
+
+CEREN . surface . part électricité:
+  titre: Part de la surface totale chauffée à l'électricité
+  formule: électricité / surface
+
+CEREN . surface . part gaz:
+  titre: Part de la surface totale chauffée au gaz
+  formule: gaz / surface
+
+CEREN . surface . part fioul:
+  titre: Part de la surface totale chauffée au fioul
+  formule: fioul / surface
+
+CEREN . surface . part bois:
+  titre: Part de la surface totale chauffée au bois
+  formule: bois / surface
+
+CEREN . surface . part réseau de chaleur:
+  titre: Part de la surface totale chauffée au réseau de chaleur
+  formule: réseau de chaleur / surface
+
+CEREN . surface . part GPL:
+  titre: Part de la surface totale chauffée au GPL
+  formule: GPL / surface
+
+CEREN . chauffage:
+  note: |
+    La consommation pour l'eau chaude sanitaire (ECS) et pour la cuisson sont également intégrées dans les consommations sous l'intitulé "chauffage".
+
+CEREN . chauffage . consommation électricité:
+  formule: chauffage + ecs + cuisson
+  note: électricité et pompe à chaleur
+  unité: kWh
+
+CEREN . chauffage . consommation électricité . chauffage:
+  titre: conso électrique liée au chauffage
+  formule: consommation électricité hors PAC . chauffage + consommation électricité PAC . chauffage
+  unité: kWh
+
+CEREN . chauffage . consommation électricité hors PAC . chauffage:
+  titre: conso électrique hors PAC liée au chauffage
+  formule: 32767771470
+  unité: kWh
+
+CEREN . chauffage . consommation électricité PAC . chauffage:
+  titre: conso électrique via PAC liée au chauffage
+  formule: 10764437339
+  unité: kWh
+
+CEREN . chauffage . consommation électricité . ecs:
+  titre: conso électrique liée à l'eau chaude sanitaire
+  formule: consommation électricité hors PAC . ecs + consommation électricité PAC . ecs
+  unité: kWh
+
+CEREN . chauffage . consommation électricité hors PAC . ecs:
+  titre: conso électrique hors PAC liée à l'eau chaude sanitaire
+  formule: 15371034254
+  unité: kWh
+
+CEREN . chauffage . consommation électricité PAC . ecs:
+  titre: conso électrique via PAC liée à l'eau chaude sanitaire
+  formule: 1223271923
+  unité: kWh
+
+CEREN . chauffage . consommation électricité . cuisson:
+  titre: conso électrique liée à la cuisson
+  formule: 12675049858
+  unité: kWh
+
+CEREN . chauffage . consommation gaz:
+  formule: chauffage + ecs + cuisson
+  unité: kWh
+
+CEREN . chauffage . consommation gaz . chauffage:
+  titre: conso gaz liée au chauffage
+  formule: 79188175605
+  unité: kWh
+
+CEREN . chauffage . consommation gaz . ecs:
+  titre: conso gaz liée à l'eau chaude sanitaire
+  formule: 12567904383
+  unité: kWh
+
+CEREN . chauffage . consommation gaz . cuisson:
+  titre: conso gaz liée à la cuisson
+  formule: 7262314502
+  unité: kWh
+
+CEREN . chauffage . consommation moyenne gaz cuisson:
+  note: Variable utilisée pour la valeur par défaut de la consommation de bouteilles de gaz
+  formule: consommation gaz . cuisson / surface . gaz * saisie surface
+  unité: kWh
+
+CEREN . chauffage . consommation fioul:
+  formule: chauffage + ecs
+  unité: kWh
+
+CEREN . chauffage . consommation fioul . chauffage:
+  titre: conso fioul liée au chauffage
+  formule: 27080257431
+  unité: kWh
+
+CEREN . chauffage . consommation fioul . ecs:
+  titre: conso fioul liée à l'eau chaude sanitaire
+  formule: 3479038952
+  unité: kWh
+
+CEREN . chauffage . consommation bois:
+  formule: chauffage + ecs
+  unité: kWh
+
+CEREN . chauffage . consommation bois . chauffage:
+  titre: conso bois liée au chauffage
+  formule: 67495214834
+  unité: kWh
+
+CEREN . chauffage . consommation bois . ecs:
+  titre: conso bois liée à l'eau chaude sanitaire
+  formule: 681666471
+  unité: kWh
+
+CEREN . chauffage . consommation réseau de chaleur:
+  formule: chauffage + ecs
+  unité: kWh
+
+CEREN . chauffage . consommation réseau de chaleur . chauffage:
+  titre: conso réseau de chaleur liée au chauffage
+  formule: 10583771417
+  unité: kWh
+
+CEREN . chauffage . consommation réseau de chaleur . ecs:
+  titre: conso réseau de chaleur liée à l'eau chaude sanitaire
+  formule: 3540333431
+  unité: kWh
+
+CEREN . chauffage . consommation GPL:
+  formule: chauffage + ecs + cuisson
+  unité: kWh
+
+CEREN . chauffage . consommation GPL . chauffage:
+  titre: conso GPL liée au chauffage
+  formule: 3183923897
+  unité: kWh
+
+CEREN . chauffage . consommation GPL . ecs:
+  titre: conso GPL liée à l'eau chaude sanitaire
+  formule: 472256142
+  unité: kWh
+
+CEREN . chauffage . consommation GPL . cuisson:
+  titre: conso GPL liée à la cuisson
+  formule: 3329319018
+  unité: kWh
+
+CEREN . chauffage . consommation électricité par m2:
+  formule: consommation électricité / surface . électricité
+  note: électricité + pompe à chaleur
+  unité: kWh/m2
+
+CEREN . chauffage . consommation gaz par m2:
+  formule: consommation gaz / surface . gaz
+  unité: kWh/m2
+  note: |
+    On retrouve à peu près la valeur donnée dans [cet article](https://selectra.info/energie/guides/conso/consommation-moyenne-gaz/tout-au-gaz) : "On estime en effet qu'il faut en moyenne 100 kWh de gaz pour chauffer 1 mètre carré".
+
+CEREN . chauffage . consommation fioul par m2:
+  formule: consommation fioul / surface . fioul
+  unité: kWh/m2
+
+CEREN . chauffage . consommation bois par m2:
+  formule: consommation bois / surface . bois
+  unité: kWh/m2
+
+CEREN . chauffage . consommation réseau de chaleur par m2:
+  formule: consommation réseau de chaleur / surface . réseau de chaleur
+  unité: kWh/m2
+
+CEREN . chauffage . consommation GPL par m2:
+  formule: consommation GPL / surface . GPL
+  unité: kWh/m2
+
+CEREN . chauffage . consommation électricité moyenne:
+  formule: consommation électricité par m2 * saisie surface
+  note: électricité + pompe à chaleur
+  unité: kWh
+
+CEREN . consommation électricité totale:
+  formule: chauffage . consommation électricité + consommation électricité autre
+
+CEREN . consommation électricité autre:
+  formule: spécifique + climatisation
+  unité: kWh
+
+CEREN . consommation électricité autre par m2:
+  formule: consommation électricité autre / surface totale
+  unité: kWh/m2
+
+CEREN . consommation électricité spécifique par m2:
+  formule: consommation électricité autre . spécifique / surface totale
+  unité: kWh/m2
+
+CEREN . consommation électricité climatisation par m2:
+  note: |
+    Selon des [données ADEME issues de Batizoom](https://batizoom.ademe.fr/indicateurs/part-des-logements-climatises), 18% des logements en France disposent d'un système de climatisation (on ne sait pas si les PAC sont comptées ici).
+  formule: consommation électricité autre . climatisation / (18% * surface totale)
+  unité: kWh/m2
+
+CEREN . consommation électricité autre . spécifique:
+  titre: conso électrique liée aux usages spécifiques (éclairage, appareils électriques, etc.)
+  formule: 73037440099
+  unité: kWh
+
+CEREN . consommation électricité autre . climatisation:
+  titre: conso électrique liée à la climatisation
+  formule: 2141336346
+  unité: kWh
+
+CEREN . part climatisation électricité:
+  formule: consommation électricité autre . climatisation / consommation électricité totale
+
+CEREN . chauffage . part chauffage air électricité:
+  formule: consommation électricité . chauffage / consommation électricité totale
+
+CEREN . chauffage . part chauffage air gaz:
+  formule: consommation gaz . chauffage / consommation gaz
+
+CEREN . chauffage . part chauffage air bois:
+  formule: consommation bois . chauffage / consommation bois
+
+CEREN . chauffage . part chauffage air fioul:
+  formule: consommation fioul . chauffage / consommation fioul
+
+CEREN . chauffage . part chauffage air réseau de chaleur:
+  formule: consommation réseau de chaleur . chauffage / consommation réseau de chaleur
+
+CEREN . chauffage . part chauffage air GPL:
+  formule: consommation GPL . chauffage / consommation GPL
+CEREN . chauffage . part ecs électricité:
+  formule: consommation électricité . ecs / consommation électricité totale
+
+CEREN . chauffage . part ecs gaz:
+  formule: consommation gaz . ecs / consommation gaz
+
+CEREN . chauffage . part ecs bois:
+  formule: consommation bois . ecs / consommation bois
+
+CEREN . chauffage . part ecs fioul:
+  formule: consommation fioul . ecs / consommation fioul
+
+CEREN . chauffage . part ecs réseau de chaleur:
+  formule: consommation réseau de chaleur . ecs / consommation réseau de chaleur
+
+CEREN . chauffage . part ecs GPL:
+  formule: consommation GPL . ecs / consommation GPL
+
+CEREN . chauffage . part cuisson électricité:
+  formule: consommation électricité . cuisson / consommation électricité totale
+
+CEREN . chauffage . part cuisson gaz:
+  formule: consommation gaz . cuisson / consommation gaz
+
+CEREN . chauffage . part cuisson GPL:
+  formule: consommation GPL . cuisson / consommation GPL
+
+CEREN . chauffage . consommation électricité chauffage air par m2:
+  formule: consommation électricité . chauffage / surface . électricité
+
+CEREN . chauffage . consommation gaz chauffage air par m2:
+  formule: consommation gaz . chauffage / surface . gaz
+
+CEREN . chauffage . consommation fioul chauffage air par m2:
+  formule: consommation fioul . chauffage / surface . fioul
+
+CEREN . chauffage . consommation buches chauffage air par m2:
+  formule: consommation bois . chauffage / surface . bois
+  note: On considère une consommation de bûches et de granulés comme étant identique, à savoir la consommation bois côté CEREN.
+
+CEREN . chauffage . consommation granulés chauffage air par m2:
+  formule: consommation bois . chauffage / surface . bois
+  note: On considère une consommation de bûches et de granulés comme étant identique, à savoir la consommation bois côté CEREN.
+
+CEREN . chauffage . consommation réseau de chaleur chauffage air par m2:
+  formule: consommation réseau de chaleur . chauffage / surface . réseau de chaleur
+
+CEREN . chauffage . consommation GPL chauffage air par m2:
+  formule: consommation GPL . chauffage / surface . GPL
+
+### Focus PAC
+
+CEREN . surface . part hors PAC électricité:
+  titre: Part de la surface totale non équipée de PAC pour le chauffage
+  formule: surface . électricité hors PAC / surface . électricité
+
+CEREN . surface . part PAC électricité:
+  titre: Part de la surface totale équipée d'une PAC pour le chauffage
+  formule: surface . électricité PAC / surface . électricité
+
+CEREN . chauffage . consommation électricité hors PAC:
+  formule: consommation électricité hors PAC . chauffage + consommation électricité hors PAC . ecs + surface . part hors PAC électricité * consommation électricité . cuisson
+  unité: kWh
+  note: On estime que la consommation électrique liée à la cuisson est partagée entre les logements avec et sans PAC en fonction de leur part respective dans la surface totale chauffée à l'électricité.
+
+CEREN . chauffage . consommation électricité PAC:
+  formule: consommation électricité PAC . chauffage + consommation électricité hors PAC . ecs + surface . part PAC électricité * consommation électricité . cuisson
+  unité: kWh
+  note: On estime que la consommation électrique liée à la cuisson est partagée entre les logements avec et sans PAC en fonction de leur part respective dans la surface totale chauffée à l'électricité.
+
+CEREN . chauffage . consommation électricité hors PAC par m2:
+  formule: consommation électricité hors PAC / surface . électricité hors PAC
+  unité: kWh/m2
+
+CEREN . chauffage . consommation électricité chauffage air hors PAC par m2:
+  formule: consommation électricité hors PAC . chauffage / surface . électricité hors PAC
+  unité: kWh/m2
+
+CEREN . chauffage . consommation électricité PAC par m2:
+  formule: consommation électricité PAC / surface . électricité PAC
+  unité: kWh/m2
+
+CEREN . chauffage . consommation électricité chauffage air PAC par m2:
+  formule: consommation électricité PAC . chauffage / surface . électricité PAC
+  unité: kWh/m2
