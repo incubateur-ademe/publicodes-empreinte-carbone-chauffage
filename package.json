@@ -1,7 +1,7 @@
 {
   "name": "@incubateur-ademe/publicodes-empreinte-carbone-chauffage",
   "description": "Modèle publicodes pour le calcul d'empreinte carbone de l'énergie en France (données base empreinte ADEME et CEREN)",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "author": "Clément Auger",
   "license": "MIT",
   "repository": "https://github.com/incubateur-ademe/publicodes-empreinte-carbone-chauffage",
