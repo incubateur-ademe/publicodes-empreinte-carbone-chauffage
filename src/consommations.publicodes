@@ -2,6 +2,21 @@ CEREN:
   description: |
     Ce modèle est basé sur le jeu de données du Ceren et SDES [Consommation d'énergie par usage du résidentiel](https://www.statistiques.developpement-durable.gouv.fr/consommation-denergie-par-usage-du-residentiel), pour l'année 2023.
 
+    L'excel SDES-CEREN nous donne accès aux surfaces des logements par énergie dont c'est la source principale d'un côté et de la consommation totale par énergie principale et appoint de l'autre. Combiner ces données a tendance à augmenter la consommation par m2. Nous utilisons les ratios suivants, fournis par le CEREN, pour différencier, dans la consommation totale, ce qui relève du chauffage principal et de l'appoint (données utilisables uniquement dans notre modèle).
+
+    | Énergie | Part de la conso dédiée au chauffage principal |
+    |---------|-------------------------|
+    | Bois | 66% |
+    | Électricité Joule | 89% |
+    | Électricité PAC | 74% |
+    | Fioul | 94% |
+    | Autres énergies | 100% |
+      
+    Quelques remarques:
+      
+      1) Il y a un nombre important de PAC AIR/AIR que le Ceren classe en équipement de chauffage associé, ce qui explique le taux de 74%
+      2) Les données de 2024 publiées par le SDES feront apparaitre des consommations de chauffage d’électricité par effet Joule sensiblement supérieures à celles de 2023 suit à la refonte du modèle de consommation par usage.
+
 CEREN . saisie surface:
   question: Souhaitez-vous personaliser la surface moyenne du logement ?
   par défaut: CEREN . surface moyenne
@@ -61,7 +76,10 @@ CEREN . surface:
   note: On considère ici toutes les sources d'énergie utiles au chauffage (air, ecs, cuisson).
 
 CEREN . surface . électricité:
-  formule: électricité hors PAC + électricité PAC
+  formule:
+    somme:
+      - électricité hors PAC
+      - électricité PAC
   unité: m2
 
 CEREN . surface . électricité hors PAC:
@@ -121,13 +139,50 @@ CEREN . chauffage:
     La consommation pour l'eau chaude sanitaire (ECS) et pour la cuisson sont également intégrées dans les consommations sous l'intitulé "chauffage".
 
 CEREN . chauffage . consommation électricité:
-  formule: chauffage + ecs + cuisson
+  formule:
+    somme:
+      - chauffage
+      - ecs
+      - cuisson
   note: électricité et pompe à chaleur
   unité: kWh
 
+CEREN . chauffage . consommation électricité hors PAC:
+  formule:
+    somme:
+      - consommation électricité hors PAC . chauffage * part source principale
+      - consommation électricité hors PAC . ecs * part source principale
+      - surface . part hors PAC électricité * consommation électricité . cuisson
+  unité: kWh
+  note: On estime que la consommation électrique liée à la cuisson est partagée entre les logements avec et sans PAC en fonction de leur part respective dans la surface totale chauffée à l'électricité.
+
+CEREN . chauffage . consommation électricité hors PAC . part source principale:
+  valeur: 0.89
+
+CEREN . chauffage . consommation électricité hors PAC . part appoint:
+  valeur: 0.11
+
+CEREN . chauffage . consommation électricité PAC:
+  formule:
+    somme:
+      - consommation électricité PAC . chauffage * part source principale
+      - consommation électricité PAC . ecs * part source principale
+      - surface . part PAC électricité * consommation électricité . cuisson
+  unité: kWh
+  note: On estime que la consommation électrique liée à la cuisson est partagée entre les logements avec et sans PAC en fonction de leur part respective dans la surface totale chauffée à l'électricité.
+
+CEREN . chauffage . consommation électricité PAC . part source principale:
+  valeur: 0.74
+
+CEREN . chauffage . consommation électricité PAC . part appoint:
+  valeur: 0.26
+
 CEREN . chauffage . consommation électricité . chauffage:
   titre: conso électrique liée au chauffage
-  formule: consommation électricité hors PAC . chauffage + consommation électricité PAC . chauffage
+  formule:
+    somme:
+      - consommation électricité hors PAC . chauffage * consommation électricité hors PAC . part source principale
+      - consommation électricité PAC . chauffage * consommation électricité PAC . part source principale
   unité: kWh
 
 CEREN . chauffage . consommation électricité hors PAC . chauffage:
@@ -142,7 +197,10 @@ CEREN . chauffage . consommation électricité PAC . chauffage:
 
 CEREN . chauffage . consommation électricité . ecs:
   titre: conso électrique liée à l'eau chaude sanitaire
-  formule: consommation électricité hors PAC . ecs + consommation électricité PAC . ecs
+  formule:
+    somme:
+      - consommation électricité hors PAC . ecs * consommation électricité hors PAC . part source principale
+      - consommation électricité PAC . ecs * consommation électricité PAC . part source principale
   unité: kWh
 
 CEREN . chauffage . consommation électricité hors PAC . ecs:
@@ -161,7 +219,11 @@ CEREN . chauffage . consommation électricité . cuisson:
   unité: kWh
 
 CEREN . chauffage . consommation gaz:
-  formule: chauffage + ecs + cuisson
+  formule:
+    somme:
+      - chauffage
+      - ecs
+      - cuisson
   unité: kWh
 
 CEREN . chauffage . consommation gaz . chauffage:
@@ -185,8 +247,17 @@ CEREN . chauffage . consommation moyenne gaz cuisson:
   unité: kWh
 
 CEREN . chauffage . consommation fioul:
-  formule: chauffage + ecs
+  formule:
+    somme:
+      - chauffage * part source principale
+      - ecs * part source principale
   unité: kWh
+
+CEREN . chauffage . consommation fioul . part source principale:
+  valeur: 0.94
+
+CEREN . chauffage . consommation fioul . part appoint:
+  valeur: 0.06
 
 CEREN . chauffage . consommation fioul . chauffage:
   titre: conso fioul liée au chauffage
@@ -199,8 +270,17 @@ CEREN . chauffage . consommation fioul . ecs:
   unité: kWh
 
 CEREN . chauffage . consommation bois:
-  formule: chauffage + ecs
+  formule:
+    somme:
+      - chauffage * part source principale
+      - ecs * part source principale
   unité: kWh
+
+CEREN . chauffage . consommation bois . part source principale:
+  valeur: 0.66
+
+CEREN . chauffage . consommation bois . part appoint:
+  valeur: 0.34
 
 CEREN . chauffage . consommation bois . chauffage:
   titre: conso bois liée au chauffage
@@ -213,7 +293,10 @@ CEREN . chauffage . consommation bois . ecs:
   unité: kWh
 
 CEREN . chauffage . consommation réseau de chaleur:
-  formule: chauffage + ecs
+  formule:
+    somme:
+      - chauffage
+      - ecs
   unité: kWh
 
 CEREN . chauffage . consommation réseau de chaleur . chauffage:
@@ -227,7 +310,11 @@ CEREN . chauffage . consommation réseau de chaleur . ecs:
   unité: kWh
 
 CEREN . chauffage . consommation GPL:
-  formule: chauffage + ecs + cuisson
+  formule:
+    somme:
+      - chauffage
+      - ecs
+      - cuisson
   unité: kWh
 
 CEREN . chauffage . consommation GPL . chauffage:
@@ -387,16 +474,6 @@ CEREN . surface . part hors PAC électricité:
 CEREN . surface . part PAC électricité:
   titre: Part de la surface totale équipée d'une PAC pour le chauffage
   formule: surface . électricité PAC / surface . électricité
-
-CEREN . chauffage . consommation électricité hors PAC:
-  formule: consommation électricité hors PAC . chauffage + consommation électricité hors PAC . ecs + surface . part hors PAC électricité * consommation électricité . cuisson
-  unité: kWh
-  note: On estime que la consommation électrique liée à la cuisson est partagée entre les logements avec et sans PAC en fonction de leur part respective dans la surface totale chauffée à l'électricité.
-
-CEREN . chauffage . consommation électricité PAC:
-  formule: consommation électricité PAC . chauffage + consommation électricité hors PAC . ecs + surface . part PAC électricité * consommation électricité . cuisson
-  unité: kWh
-  note: On estime que la consommation électrique liée à la cuisson est partagée entre les logements avec et sans PAC en fonction de leur part respective dans la surface totale chauffée à l'électricité.
 
 CEREN . chauffage . consommation électricité hors PAC par m2:
   formule: consommation électricité hors PAC / surface . électricité hors PAC
