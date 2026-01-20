@@ -130,6 +130,16 @@ CEREN . chauffage . consommation électricité . chauffage:
   formule: consommation électricité hors PAC . chauffage + consommation électricité PAC . chauffage
   unité: kWh
 
+CEREN . chauffage . consommation électricité hors PAC:
+  formule: consommation électricité hors PAC . chauffage + consommation électricité hors PAC . ecs + surface . part hors PAC électricité * consommation électricité . cuisson
+  unité: kWh
+  note: On estime que la consommation électrique liée à la cuisson est partagée entre les logements avec et sans PAC en fonction de leur part respective dans la surface totale chauffée à l'électricité.
+
+CEREN . chauffage . consommation électricité PAC:
+  formule: consommation électricité PAC . chauffage + consommation électricité PAC . ecs + surface . part PAC électricité * consommation électricité . cuisson
+  unité: kWh
+  note: On estime que la consommation électrique liée à la cuisson est partagée entre les logements avec et sans PAC en fonction de leur part respective dans la surface totale chauffée à l'électricité.
+
 CEREN . chauffage . consommation électricité hors PAC . chauffage:
   titre: conso électrique hors PAC liée au chauffage
   formule: 32767771470
@@ -387,16 +397,6 @@ CEREN . surface . part hors PAC électricité:
 CEREN . surface . part PAC électricité:
   titre: Part de la surface totale équipée d'une PAC pour le chauffage
   formule: surface . électricité PAC / surface . électricité
-
-CEREN . chauffage . consommation électricité hors PAC:
-  formule: consommation électricité hors PAC . chauffage + consommation électricité hors PAC . ecs + surface . part hors PAC électricité * consommation électricité . cuisson
-  unité: kWh
-  note: On estime que la consommation électrique liée à la cuisson est partagée entre les logements avec et sans PAC en fonction de leur part respective dans la surface totale chauffée à l'électricité.
-
-CEREN . chauffage . consommation électricité PAC:
-  formule: consommation électricité PAC . chauffage + consommation électricité hors PAC . ecs + surface . part PAC électricité * consommation électricité . cuisson
-  unité: kWh
-  note: On estime que la consommation électrique liée à la cuisson est partagée entre les logements avec et sans PAC en fonction de leur part respective dans la surface totale chauffée à l'électricité.
 
 CEREN . chauffage . consommation électricité hors PAC par m2:
   formule: consommation électricité hors PAC / surface . électricité hors PAC
