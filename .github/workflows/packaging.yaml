@@ -73,7 +73,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v3
         with:
-          node-version: 22
+          node-version: 24
       - name: Install dependencies and build
         run: yarn install --immutable
       - run: VITE_BASE_PATH=/${{ github.event.repository.name }} yarn run doc:build
@@ -101,14 +101,11 @@ jobs:
       - name: Setup .npmrc file to publish to npm
         uses: actions/setup-node@v3
         with:
-          node-version: 22
+          node-version: 24
           registry-url: "https://registry.npmjs.org"
       - name: Install dependencies
         run: yarn install --immutable
       - name: Prepare packaging
         run: yarn prepack
-      # Ensure npm 11.5.1 or later is installed
-      - name: Update npm
-        run: npm install -g npm@latest
       - name: Publish to NPM
         run: npm publish
