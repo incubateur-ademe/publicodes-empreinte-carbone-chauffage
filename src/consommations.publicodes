@@ -369,7 +369,7 @@ CEREN . chauffage . consommation électricité moyenne:
   unité: kWh
 
 CEREN . consommation électricité totale:
-  formule: chauffage . consommation électricité + consommation électricité autre
+  formule: chauffage . consommation électricité + consommation électricité autre  * (surface . électricité / surface totale)
 
 CEREN . consommation électricité autre:
   formule: spécifique + climatisation
@@ -419,6 +419,7 @@ CEREN . chauffage . part chauffage air réseau de chaleur:
 
 CEREN . chauffage . part chauffage air GPL:
   formule: consommation GPL . chauffage / consommation GPL
+
 CEREN . chauffage . part ecs électricité:
   formule: consommation électricité . ecs / consommation électricité totale
 
