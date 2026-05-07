@@ -368,8 +368,11 @@ CEREN . chauffage . consommation électricité moyenne:
   note: électricité + pompe à chaleur
   unité: kWh
 
-CEREN . consommation électricité totale:
+CEREN . chauffage . consommation électricité totale:
   formule: chauffage . consommation électricité + consommation électricité autre  * (surface . électricité / surface totale)
+
+CEREN . consommation électricité totale:
+  formule: chauffage . consommation électricité + consommation électricité autre
 
 CEREN . consommation électricité autre:
   formule: spécifique + climatisation
@@ -400,10 +403,10 @@ CEREN . consommation électricité autre . climatisation:
   unité: kWh
 
 CEREN . part climatisation électricité:
-  formule: consommation électricité autre . climatisation / consommation électricité totale
+  formule: consommation électricité autre . climatisation / chauffage . consommation électricité totale
 
 CEREN . chauffage . part chauffage air électricité:
-  formule: consommation électricité . chauffage / consommation électricité totale
+  formule: consommation électricité . chauffage / chauffage . consommation électricité totale
 
 CEREN . chauffage . part chauffage air gaz:
   formule: consommation gaz . chauffage / consommation gaz
@@ -421,7 +424,7 @@ CEREN . chauffage . part chauffage air GPL:
   formule: consommation GPL . chauffage / consommation GPL
 
 CEREN . chauffage . part ecs électricité:
-  formule: consommation électricité . ecs / consommation électricité totale
+  formule: consommation électricité . ecs / chauffage . consommation électricité totale
 
 CEREN . chauffage . part ecs gaz:
   formule: consommation gaz . ecs / consommation gaz
@@ -439,7 +442,7 @@ CEREN . chauffage . part ecs GPL:
   formule: consommation GPL . ecs / consommation GPL
 
 CEREN . chauffage . part cuisson électricité:
-  formule: consommation électricité . cuisson / consommation électricité totale
+  formule: consommation électricité . cuisson / chauffage . consommation électricité totale
 
 CEREN . chauffage . part cuisson gaz:
   formule: consommation gaz . cuisson / consommation gaz
